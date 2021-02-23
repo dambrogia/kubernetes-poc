@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: varnish-deployment
+  labels:
+    deployment: varnish
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      pod: varnish
+  template:
+    metadata:
+      labels:
+        pod: varnish
+    spec:
+      containers:
+        - name: varnish-container
+          image: varnish:6.0.7-1
+          ports:
+            - containerPort: 80
+              protocol: TCP

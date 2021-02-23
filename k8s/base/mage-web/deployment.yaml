@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mage-web-deployment
+  labels:
+    deployment: mage-web
+spec:
+  replicas: 30
+  selector:
+    matchLabels:
+      pod: mage-web
+  template:
+    metadata:
+      labels:
+        pod: mage-web
+    spec:
+      containers:
+        - name: mage-web-container
+          image: jmalloc/echo-server:0.1.0
+          ports:
+            - name: mage-web-ports
+              containerPort: 8080
+              protocol: TCP

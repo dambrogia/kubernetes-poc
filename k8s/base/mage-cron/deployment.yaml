@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mage-cron-deployment
+  labels:
+    deployment: mage-cron
+spec:
+  replicas: 30
+  selector:
+    matchLabels:
+      pod: mage-cron
+  template:
+    metadata:
+      labels:
+        pod: mage-cron
+    spec:
+      containers:
+        - name: mage-cron-container
+          image: jmalloc/echo-server:0.1.0
+          ports:
+            - name: mage-cron-ports
+              containerPort: 8080
+              protocol: TCP

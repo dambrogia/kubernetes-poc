@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+  labels:
+    deployment: mariadb
+spec:
+  selector:
+    matchLabels:
+      pod: mariadb
+  template:
+    metadata:
+      labels:
+        pod: mariadb
+    spec:
+      containers:
+        - name: mariadb-container
+          image: mariadb:10.3.28-focal
+          ports:
+            - containerPort: 3306
+          env:
+            - { name: MYSQL_ROOT_PASSWORD, valueFrom: { secretKeyRef: { name: secrets, key: MYSQL_ROOT_PASSWORD } } }
+            - { name: MYSQL_DATABASE, valueFrom: { secretKeyRef: { name: secrets, key: MAGENTO_DB_DATABASE } } }
+            - { name: MYSQL_USER, valueFrom: { secretKeyRef: { name: secrets, key: MAGENTO_DB_USER } } }
+            - { name: MYSQL_PASSWORD, valueFrom: { secretKeyRef: { name: secrets, key: MAGENTO_DB_PASSWORD } } }
+          volumeMounts:
+            - name: mariadb-volume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-volume
+          persistentVolumeClaim:
+            claimName: mariadb-volume-claim

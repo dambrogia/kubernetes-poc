@@ -1,0 +1,59 @@
+# Uses master/slave setup
+# https://tech.ringieraxelspringer.com/blog/cloud/how-to-create-a-primary-replica-redis-cluster-in-kubernetes/r8lt028
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    deployment: redis
+spec:
+  selector:
+    matchLabels:
+      pod: redis
+  template:
+    metadata:
+      labels:
+        pod: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.11:alpine
+          command:
+            - "redis-server"
+          args:
+            - "--protected-mode"
+            - "no"
+          ports:
+            - containerPort: 6379
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-replica-deployment
+  labels:
+    deployment: redis-replica
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      pod: redis-replica
+  template:
+    metadata:
+      labels:
+        pod: redis-replica
+    spec:
+      containers:
+        - name: redis-replica
+          image: redis:5.0.11:alpine
+          command:
+            - "redis-server"
+          args:
+            - "--slaveof"
+            - "redis" # this should pull from service.yaml .metadata.name
+            - "6379"
+            - "--protected-mode"
+            - "no"
+          ports:
+            - containerPort: 6379

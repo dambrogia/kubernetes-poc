@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mage-admin-deployment
+  labels:
+    deployment: mage-admin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      pod: mage-admin
+  template:
+    metadata:
+      labels:
+        pod: mage-admin
+    spec:
+      containers:
+        - name: mage-admin-container
+          image: jmalloc/echo-server:0.1.0
+          ports:
+            - name: mage-admin-ports
+              containerPort: 8080
+              protocol: TCP
