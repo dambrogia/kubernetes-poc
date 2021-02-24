@@ -1,0 +1,25 @@
+name: Push PHP source to docker
+on:
+  push:
+jobs:
+  push_to_docker_hub:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Push to Docker Hub
+        run: |
+          cd php;
+          # Declare context variables
+          yyyy_mm_dd=$(date +'%Y-%m-%d')
+          commit_hash=$(echo ${GITHUB_SHA} | cut -c1-4)
+          repo="domdambrogia/misc"
+          tag="${yyyy_mm_dd}-php-src-${commit_hash}"
+          # Log in to docker
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          # Build image
+          docker build -t ${repo}:${tag} .
+          # Commit image
+          docker push ${repo}:${tag}
