@@ -2,6 +2,8 @@
 
 namespace App\Amqp;
 
+use PhpAmqpLib\Message\AMQPMessage;
+
 /**
  * Ideally this would be split into multiple classes. However for the sake of
  * testing and simplicitly it is in one class.

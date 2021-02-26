@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redis:5.0.11:alpine
+          image: redis:5.0.11-alpine
           command:
             - "redis-server"
           args:
@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: redis-replica
-          image: redis:5.0.11:alpine
+          image: redis:5.0.11-alpine
           command:
             - "redis-server"
           args:

@@ -5,7 +5,6 @@ metadata:
   labels:
     deployment: rmq
 spec:
-  replicas: 30
   selector:
     matchLabels:
       pod: rmq
@@ -18,10 +17,8 @@ spec:
         - name: rmq-container
           image: rabbitmq:3.7.6-management
           ports:
-            - name: rmq-ports
-              containerPort: 15672
-              hostPort: 80
-              protocol: TCP
+            - containerPort: 15672
+            - containerPort: 5672
       volumes:
         - name: rmq-volume
           persistentVolumeClaim:

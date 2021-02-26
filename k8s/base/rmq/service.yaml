@@ -3,8 +3,11 @@ kind: Service
 metadata:
   name: rmq-service
 spec:
-  type: ClusterIp
+  type: ClusterIP
   selector:
     pod: rmq
   ports:
-    - port: 80
+    - name: rmq-managment-port
+      port: 15672
+    - name: rmq-service-port
+      port: 5672
