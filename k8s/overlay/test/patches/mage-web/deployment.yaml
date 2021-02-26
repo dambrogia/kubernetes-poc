@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: mage-web-container
-          image: domdambrogia/misc:2021-02-26-php-src-85ab
+          image: domdambrogia/misc:2021-02-26-php-src-f572
