@@ -30,31 +30,20 @@ class Queue
     }
 
     /**
-     * Consume the messages on the queue currently.
+     * Consume a message on the queue.
      *
      * @return void
      */
-    private static function consume(): array
+    private static function consume(): string
     {
-        $responses = [];
-
-        $callback = function ($message) use ($responses) {
-            $responses[] = $message->body;
-        };
-
         $connection = ConnectionFactory::getConnection();
         $channel = $connection->channel();
         $channel->queue_declare(static::NAME);
-        $channel->basic_consume(static::NAME, '', false, true, false, false, $callback);
-
-        while ($channel->is_consuming()) {
-            $channel->wait();
-        }
-
+        $message = $channel->basic_get(static::NAME, true, null);
         $channel->close();
         $connection->close();
 
-        return $responses;
+        return $message && $message->body ? $message->body : '';
     }
 
     /**
@@ -68,6 +57,11 @@ class Queue
         static::produce('message 1 - ' . $time);
         static::produce('message 2 - ' . $time);
         static::produce('message 3 - ' . $time);
-        return static::consume();
+
+        return [
+            static::consume(),
+            static::consume(),
+            static::consume()
+        ];
     }
 }
