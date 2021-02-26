@@ -15,7 +15,7 @@ class Client {
     {
         $host = getenv('REDIS_HOST');
         $port = getenv('REDIS_PORT');
-        $client = new \Redis([
+        $client = new Redis([
             'scheme' => 'tcp',
             'host'   => $host,
             'port'   => $port,

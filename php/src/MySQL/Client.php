@@ -24,6 +24,6 @@ class Client {
         }
 
         $sql = 'show databases';
-        return $conn->query($sql)->fetch_assoc();
+        return $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
 }
