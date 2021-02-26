@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mage-web-container
-          image: domdambrogia/misc:2021-02-24-php-src-b2b9
+          image: domdambrogia/misc:2021-02-26-php-src-85ab
           ports:
             - name: mage-web-ports
               containerPort: 8080
