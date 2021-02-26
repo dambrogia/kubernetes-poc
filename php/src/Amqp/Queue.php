@@ -47,7 +47,7 @@ class Queue
         $channel->queue_declare(static::NAME);
         $channel->basic_consume(static::NAME, '', false, true, false, false, $callback);
 
-        while (count($channel->callbacks)) {
+        while ($channel->is_consuming()) {
             $channel->wait();
         }
 

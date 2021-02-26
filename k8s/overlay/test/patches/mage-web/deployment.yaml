@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mage-web-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: mage-web-container
+          image: domdambrogia/misc:2021-02-26-php-src-85ab

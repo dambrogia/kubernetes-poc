@@ -5,7 +5,7 @@ metadata:
   labels:
     deployment: mage-web
 spec:
-  replicas: 30
+  replicas: 3
   selector:
     matchLabels:
       pod: mage-web

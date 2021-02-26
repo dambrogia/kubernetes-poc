@@ -6,3 +6,6 @@ bases:
   - ../../base/mariadb
   - ../../base/redis
   - ../../base/rmq
+
+patchesStrategicMerge:
+- patches/mage-web/deployment.yaml
